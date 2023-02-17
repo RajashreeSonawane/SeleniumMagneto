@@ -24,22 +24,24 @@ public class Driver {
 	public WebDriver setDriver() {
 		if (browser.equalsIgnoreCase("firefox")) {
 			log.info("Executing on FireFox");
-			FirefoxOptions options=new FirefoxOptions();
+			FirefoxOptions options = new FirefoxOptions();
 			options.setHeadless(true);
-			driver=new FirefoxDriver(options);
-			
-			} else if (browser.equalsIgnoreCase("chrome")) {
+			driver = new FirefoxDriver(options);
+
+		} else if (browser.equalsIgnoreCase("chrome")) {
 			log.info("Executing on CHROME");
-			ChromeOptions options=new ChromeOptions();
-			options.addArguments("headless");
-			driver=new ChromeDriver(options);
-			
-			} else if (browser.equalsIgnoreCase("ie")) {
+			//ChromeOptions options = new ChromeOptions();
+			//options.addArguments("headless");
+			//driver = new ChromeDriver(options);
+			 WebDriverManager.chromedriver().setup();
+			 driver = new ChromeDriver();
+
+		} else if (browser.equalsIgnoreCase("ie")) {
 			log.info("Executing on IE");
-			EdgeOptions options=new EdgeOptions();
+			EdgeOptions options = new EdgeOptions();
 			options.setHeadless(true);
-			driver=new EdgeDriver(options);
-			}
+			driver = new EdgeDriver(options);
+		}
 		return driver;
 	}
 
