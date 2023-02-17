@@ -1,13 +1,18 @@
 package MagnetoTest;
 
 import org.testng.annotations.Test;
+
+import com.excel.Utility.Xls_Reader;
+import com.utility.ExcelUtil;
+
 import org.testng.Assert;
 
 import java.io.FileReader;
 import java.io.IOException;
 
 import java.time.Duration;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -22,7 +27,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 
 import org.testng.annotations.BeforeTest;
-
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 
 import org.apache.log4j.Logger;
@@ -36,7 +41,7 @@ public class MagnetoApplicationTest {
 
 	static Logger log = Logger.getLogger(MagnetoApplicationTest.class);
 
-	public static Properties get_properties_Data() throws Exception {
+	public static Properties get_properties() throws Exception {
 
 		FileReader reader = new FileReader("src\\test\\java\\ConfigProperties\\url.properties");
 		Properties url = new Properties();
@@ -66,7 +71,7 @@ public class MagnetoApplicationTest {
 		Driver d = new Driver(browser);
 		driver = d.setDriver();
 		driver.manage().window().maximize();
-		driver.get(get_properties_Data().getProperty("url"));
+		driver.get(get_properties().getProperty("url"));
 		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		log.info("Open the Magneto software Testing Url");
 
@@ -172,49 +177,48 @@ public class MagnetoApplicationTest {
 	 * @return
 	 * @throws Exception
 	 */
-	@Test(priority = 4)
+	@DataProvider
+	public Iterator<Object[]> getTestData() {
+		ArrayList<Object[]> testData = ExcelUtil.getDataFromExcel();
+		return testData.iterator();
+	}
 
-	public void FillShippingData() throws Exception {
-
+	@Test(dataProvider = "getTestData", priority = 4)
+	public void FillShippingData(String email, String firstname, String lastname, String company, String street_address,
+			String city, String postal_code, String phone) throws Exception {
+		
 		By emailBy = By.xpath("//fieldset[@id='customer-email-fieldset']//input[@type='email']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy))
-				.sendKeys(get_properties_Data().getProperty("email"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).sendKeys(email);
 		log.info("Enter Email id");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By firstnameBy = By.xpath("//input[@name='firstname']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(firstnameBy))
-				.sendKeys(get_properties_Data().getProperty("firstname"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(firstnameBy)).sendKeys(firstname);
 		log.info("enter FirstName");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By lastnameBy = By.xpath("//input[@name='lastname']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(lastnameBy))
-				.sendKeys(get_properties_Data().getProperty("lastname"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(lastnameBy)).sendKeys(lastname);
 		log.info("enter lastname");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By companyBy = By.xpath("//input[@name='company']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(companyBy))
-				.sendKeys(get_properties_Data().getProperty("company"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(companyBy)).sendKeys(company);
 		log.info("enter company name");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By streetBy = By.xpath("//input[@name='street[0]']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(streetBy))
-				.sendKeys(get_properties_Data().getProperty("street_address"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(streetBy)).sendKeys(street_address);
 		log.info("enter street address");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By cityBy = By.xpath("//input[@name='city']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(cityBy))
-				.sendKeys(get_properties_Data().getProperty("city"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(cityBy)).sendKeys(city);
 		log.info("enter city");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By postcodeBy = By.xpath("//input[@name='postcode']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(postcodeBy))
-				.sendKeys(get_properties_Data().getProperty("postal_code"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(postcodeBy)).sendKeys(postal_code);
 		log.info("enter postcode");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
@@ -230,8 +234,7 @@ public class MagnetoApplicationTest {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		By phoneBy = By.xpath("//input[@name='telephone']");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(phoneBy))
-				.sendKeys(get_properties_Data().getProperty("phone_no"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(phoneBy)).sendKeys(phone);
 		log.info("enter mobile number");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
