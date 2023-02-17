@@ -118,22 +118,17 @@ public class MagnetoApplicationTest {
 	 */
 	@Test(priority = 2)
 	public void AddToCart() {
-
 		By sizeBy = By.xpath("//div[@aria-label='XS']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(sizeBy)).click();
 		log.info("click on 'size' and select size");
-
 		By colorBy = By.xpath("//div[@aria-label='Red']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(colorBy)).click();
 		log.info("click on 'color' and select color");
-
 		By AddedCartBy = By.xpath("//button[@class='action primary tocart']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(AddedCartBy)).click();
 		log.info("clicked on Add to cart button");
-
 		By msg = By.xpath("//div[@role='alert']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(msg));
-
 	}
 
 	/**
@@ -144,26 +139,23 @@ public class MagnetoApplicationTest {
 	 */
 	@Test(priority = 3)
 	public void Shippingcart() {
-
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By showcartBy = By.xpath("//a[@class='action showcart']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(showcartBy)).click();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		log.info("click on show cart button");
-
 		By checkoutBy = By.xpath("//button[@id='top-cart-btn-checkout']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutBy)).click();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		log.info("click on proceed to checkout");
-
 	}
 
 	/**
-	 * @param filling    shipping data
-	 * @param data(Email id,first name,last name,company,street address,city)
-	 * @param data       (state,post code,country,telephone number and shipping
-	 *                   methods)
+	 * @param filling                                 shipping data
+	 * @param data(Email                              id,first name,last
+	 *                                                name,company,street
+	 *                                                address,city)
+	 * @param data(state,post_code,country,phone,ship method)
 	 * @return
 	 * @throws Exception
 	 */
@@ -245,7 +237,6 @@ public class MagnetoApplicationTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(nextbuttonBy)).click();
 		log.info("click on next button");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 	}
 
 	/**
@@ -254,7 +245,6 @@ public class MagnetoApplicationTest {
 	 * @param product_quantity,product_color ,product_size and product_price
 	 * @return
 	 */
-
 	@Test(priority = 5)
 	public void VerifyOrderSummary() {
 		WebElement ordersummary = driver.findElement(By.xpath("//div[@class='opc-block-summary']"));
@@ -292,18 +282,14 @@ public class MagnetoApplicationTest {
 		String ExpectedText2 = "$32.00";
 		Assert.assertEquals(ExpectedText2, Product_price.getText());
 		log.info("Product_price text is a expected – Assert passed");
-
 	}
 
 	/**
 	 * automated all test cases and close the driver
 	 */
-
 	@AfterTest
 	public void Close() {
-
 		log.info("Broswer Close");
 		driver.quit();
-
 	}
 }
