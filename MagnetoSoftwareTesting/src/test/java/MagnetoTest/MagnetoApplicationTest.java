@@ -24,33 +24,25 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 public class MagnetoApplicationTest {
-
 	WebDriver driver;
-
 	WebDriverWait wait;
-
 	static Logger log = Logger.getLogger(MagnetoApplicationTest.class);
 
 	public static Properties get_properties() throws Exception {
-
 		FileReader reader = new FileReader("src\\test\\java\\ConfigProperties\\magnetoApp.properties");
 		Properties url = new Properties();
 		try {
 			url.load(reader);
 		} catch (IOException e) {
-
 			log.error("Ops!", e);
-
 		}
 		return url;
-
 	}
 
 	/**
-	 * Code is Functional testing application
+	 * * Code is Functional testing application
 	 * 
-	 * @param browser (Code is executed in cross browser like chrome,edge and
-	 *                firefox)
+	 * @param cross browser
 	 * @return
 	 * @throws Exception
 	 */
@@ -64,38 +56,31 @@ public class MagnetoApplicationTest {
 		driver.get(get_properties().getProperty("url"));
 		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		log.info("Open the Magneto software Testing Url");
-
 	}
 
 	/**
 	 * @param chooseProduct
-	 * @param mouse         Hover(perform actions for women,tops and tees)
-	 * @param tees
+	 * @param mouse         Hover
 	 * @return
 	 * @throws InterruptedException
 	 */
 	@Test(priority = 0)
 	public void chooseProduct() throws InterruptedException {
-
 		Actions act = new Actions(driver);
-
 		By womenBy = By.xpath("//li[@class='level0 nav-2 category-item level-top parent ui-menu-item']/a");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(womenBy));
 		WebElement women = driver.findElement(womenBy);
 		act.moveToElement(women).build().perform();
 		log.info("Move to Women");
-
 		By topsBy = By.xpath("//*[@id='ui-id-9']/span[2]");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(topsBy));
 		WebElement tops = driver.findElement(topsBy);
 		act.moveToElement(tops).perform();
 		log.info("move to Tops");
-
 		By teesBy = By.xpath("//*[@id='ui-id-13']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(teesBy)).click();
 		log.info("move to tees and clicked tees product");
 		log.info("choose Women Top,Tees product and clicked on product");
-
 	}
 
 	/**
@@ -103,7 +88,6 @@ public class MagnetoApplicationTest {
 	 * @param Minerva       LumaTech™ V-Tee
 	 * @return
 	 */
-
 	@Test(priority = 1)
 	public void selectProduct() {
 		By selectproductBy = By.xpath("//ol[@class='products list items product-items']/li[7]");
@@ -112,7 +96,7 @@ public class MagnetoApplicationTest {
 	}
 
 	/**
-	 * @param Add        to cart selected product
+	 * @param adding     selected product
 	 * @param size,color and quantity
 	 * @return
 	 */
@@ -151,11 +135,7 @@ public class MagnetoApplicationTest {
 	}
 
 	/**
-	 * @param filling                                 shipping data
-	 * @param data(Email                              id,first name,last
-	 *                                                name,company,street
-	 *                                                address,city)
-	 * @param data(state,post_code,country,phone,ship method)
+	 * @param filling shipping data
 	 * @return
 	 * @throws Exception
 	 */
@@ -168,71 +148,58 @@ public class MagnetoApplicationTest {
 	@Test(dataProvider = "getTestData", priority = 4)
 	public void FillShippingData(String email, String firstname, String lastname, String company, String street_address,
 			String city, String postal_code, String phone) throws Exception {
-
 		By emailBy = By.xpath("//fieldset[@id='customer-email-fieldset']//input[@type='email']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).sendKeys(email);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("Enter Email id");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By firstnameBy = By.xpath("//input[@name='firstname']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(firstnameBy)).sendKeys(firstname);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter FirstName");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By lastnameBy = By.xpath("//input[@name='lastname']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(lastnameBy)).sendKeys(lastname);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter lastname");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By companyBy = By.xpath("//input[@name='company']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(companyBy)).sendKeys(company);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter company name");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By streetBy = By.xpath("//input[@name='street[0]']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(streetBy)).sendKeys(street_address);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter street address");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By cityBy = By.xpath("//input[@name='city']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(cityBy)).sendKeys(city);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter city");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By postcodeBy = By.xpath("//input[@name='postcode']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(postcodeBy)).sendKeys(postal_code);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter postcode");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By countryBy = By.xpath("//select[@name='country_id']//option[@data-title='India']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(countryBy)).click();
 		log.info("click on country");
-
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By regionBy = By.xpath("//select[@name='region_id']//option[@data-title='Andhra Pradesh']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(regionBy)).click();
 		log.info("click on state");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By phoneBy = By.xpath("//input[@name='telephone']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(phoneBy)).sendKeys(phone);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(emailBy)).clear();
 		log.info("enter mobile number");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By keymethodBy = By.xpath("//*[@id='label_carrier_flatrate_flatrate']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(keymethodBy)).click();
 		log.info("click on shipping methods");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By nextbuttonBy = By.xpath("//button[@class='button action continue primary']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(nextbuttonBy)).click();
 		log.info("click on next button");
@@ -249,16 +216,13 @@ public class MagnetoApplicationTest {
 	public void VerifyOrderSummary() {
 		WebElement ordersummary = driver.findElement(By.xpath("//div[@class='opc-block-summary']"));
 		wait.until(ExpectedConditions.visibilityOf(ordersummary));
-
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		By productdetailBy = By.xpath("//div[@class='block items-in-cart']/div");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(productdetailBy));
 		WebElement product = driver.findElement(productdetailBy);
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("arguments[0].click();", product);
-
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By nameBy = By.xpath("//div[@class='product-item-name-block']/strong[@class='product-item-name']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(nameBy));
 		WebElement Product_name = driver.findElement(nameBy);
@@ -267,7 +231,6 @@ public class MagnetoApplicationTest {
 		Assert.assertEquals(ExpectedText, Product_name.getText());
 		log.info("Product_name text is a expected – Assert passed");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By quantityBy = By.xpath("//div[@class='product-item-name-block']/div/span[2]");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(quantityBy));
 		WebElement Product_Quantity = driver.findElement(quantityBy);
@@ -275,7 +238,6 @@ public class MagnetoApplicationTest {
 		Assert.assertEquals(ExpectedText1, Product_Quantity.getText());
 		log.info(" Product_Quantity text is a expected – Assert passed");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
-
 		By priceBy = By.xpath("//span[@class='cart-price']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(priceBy));
 		WebElement Product_price = driver.findElement(priceBy);

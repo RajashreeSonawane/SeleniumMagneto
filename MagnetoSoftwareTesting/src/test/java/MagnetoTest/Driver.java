@@ -9,10 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.apache.log4j.Logger;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 public class Driver {
-
 	static Logger log = Logger.getLogger(Driver.class);
 	WebDriver driver;
 	String browser;
@@ -27,15 +24,13 @@ public class Driver {
 			FirefoxOptions options = new FirefoxOptions();
 			options.setHeadless(true);
 			driver = new FirefoxDriver(options);
-
 		} else if (browser.equalsIgnoreCase("chrome")) {
 			log.info("Executing on CHROME");
-			//ChromeOptions options = new ChromeOptions();
-			//options.addArguments("headless");
-			//driver = new ChromeDriver(options);
-			 WebDriverManager.chromedriver().setup();
-			 driver = new ChromeDriver();
-
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("headless");
+			driver = new ChromeDriver(options);
+			// WebDriverManager.chromedriver().setup();
+			// driver = new ChromeDriver();
 		} else if (browser.equalsIgnoreCase("ie")) {
 			log.info("Executing on IE");
 			EdgeOptions options = new EdgeOptions();
@@ -44,5 +39,4 @@ public class Driver {
 		}
 		return driver;
 	}
-
 }
